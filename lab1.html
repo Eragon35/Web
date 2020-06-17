@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- GET-request method -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="shortcut icon" href="icon.png"> <!--favicon.ico-->
+    <title>ITMO</title>
+    <style>
+        body{
+            background-image: url(back.png);
+            background-size: 20%; 
+            /* filter: blur(8px); */
+            /*ackdrop-filter: blur (20px)*/
+        }
+       
+        header{
+            font-family: "Montserrat","Open Sans", sans-serif;
+            color:#fff;
+            font-size: 18pt;
+           /* text-transform: uppercase;*/
+            background-color: #02f;
+            /*border-width: 100px;
+            border:  #fff;*/
+            border: 2px solid white;
+            padding-top: 3px;
+            padding-bottom: 3px;
+            width: 420px; 
+            text-align: center;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        #description{
+            width: 40%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        form{
+            font-family: "Montserrat","Open Sans", sans-serif;
+            font-size: 16pt;
+            line-height: 1px;
+            padding-left: 15px; /* задал отступы элементов ввода в пикселях*/
+            color: #fff;
+            margin-left: auto;
+            margin-right: auto;
+            width: 35%; 
+            text-align: center;
+            border: 2px solid white;
+            background-color: rgba(0, 34, 255, 0.5);
+            margin-top: 10px;
+        }
+        .image {
+            margin-top: 10px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: right;
+            width:50%;
+            border:3px solid #02f;
+        }
+        .r{
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<script type="text/javascript" >
+// src="https://code.jquery.com/jquery-3.4.1.js"
+    let r = 0;
+    let foo = true;
+    let x;
+    let y;
+    let message = "Технические работы в ИСУ\n \nДоступ к ИСУ временно ограничен. Мы работаем над исправлением ошибок." + 
+        "\n \nПриносим извинения за доставленные неудобства. ";
+    function input(number){
+        r = number;
+    }
+    function check(){
+        var flag = 0;
+        for (var i = 0; i< 9; i++) {
+        if(document.myform["inputX"][i].checked){
+            flag ++;
+            x = document.myform["inputX"][i].value;
+            }
+        }
+        if (flag != 1) {
+            foo = false;
+        alert ("Выберите только ОДНО значение X");
+        }
+        let input = document.getElementById("inputY").value;
+        if (input.length == 0){
+            foo = false;
+            alert("Заполните форму Y")
+        }
+        else if (/[a-zа-яё]/i.test(input)){
+            foo = false;
+            alert("Поле не должно содержать буквы, попробуйте ещё раз");
+        }
+        else if ((input <= -3 || input >= 5)){
+            foo = false;
+            alert("Значение Y должно входить в (-3;5)");
+        }
+        else if (r == 0){
+            foo = false;
+            alert("Выберите R");
+        }
+    if (foo) alert(input + " " + message); //вызываем php-скрипт
+    }
+    
+    
+    
+  // закончилась часть Javascript
+  </script>
+    
+<body>
+    <div id = "labInfo" title = "Общая информация">
+        <header>Л/р по Веб-программированию №1<br>
+            Антипин Арсентий Александрович<br>
+            P3211 Вариант № 211001
+        </header>
+    </div>
+
+    <div id = "description" title = "Задание">
+        
+        <img src="plot1.png" alt="график функции" class ="image" align = "right" title="График"/>
+        <br>
+        <h2>Разработанная HTML-страница должна удовлетворять следующим требованиям:</h2>
+        <ul> 
+                <li>Для расположения текстовых и графических элементов используется блочная верстка.</li>
+                <li>Данные формы передаются на обработку посредством GET-запроса.</li>
+                <li>Таблицы стилей располагаются в самом веб-документе.</li>
+                <li>При работе с CSS продемонстрировано использование селекторов идентификаторов, селекторов элементов, селекторов атрибутов, селекторов потомств а также такие свойства стилей CSS, как наследование и каскадирование.</li>
+                <li>HTML-страница имеет "шапку", содержащую ФИО студента, номер группы и новер варианта. При оформлении шапки явным образом задан шрифт (sans-serif), его цвет и размер в каскадной таблице стилей.</li>
+                <li>Отступы элементов ввода должны задаваться в пикселях.</li>
+                <li>Страница содержит сценарий на языке JavaScript, осуществляющий валидацию значений, вводимых пользователем в поля формы. Любые некорректные значения (например, буквы в координатах точки или отрицательный радиус) блокируются.</li>
+                </ul>
+
+
+        
+    </div>
+
+    <div>
+        <form name = "myform">  <!-- action="lab1.php" method="get" -->
+            <p>Выберите X</p>
+            <input type = "checkbox" name = "inputX" value="-5"> -5
+            <input type = "checkbox" name = "inputX" value="-4"> -4
+            <input type = "checkbox" name = "inputX" value="-3"> -3
+            <input type = "checkbox" name = "inputX" value="-2"> -2
+            <input type = "checkbox" name = "inputX" value="-1"> -1
+            <input type = "checkbox" name = "inputX" value="0"> 0
+            <input type = "checkbox" name = "inputX" value="1"> 1
+            <input type = "checkbox" name = "inputX" value="2"> 2
+            <input type = "checkbox" name = "inputX" value="3"> 3
+            <!-- X -->
+            <p>Введите Y</p>
+            <input type = "text" id = "inputY" maxlength="5"> <!-- Y можно было бы использовать type = "number" чтобы вводить только цифры -->
+            <p>Выберите R</p>
+            <input type = "button" name = "inputR" value="1" class = "r" onclick="input(1)">
+            <input type = "button" name = "inputR" value="2" class = "r" onclick="input(2)">
+            <input type = "button" name = "inputR" value="3" class = "r" onclick="input(3)">
+            <input type = "button" name = "inputR" value="4" class = "r" onclick="input(4)">
+            <input type = "button" name = "inputR" value="5" class = "r" onclick="input(5)"> 
+            <br>
+            <br>
+            <br>
+            <button style="font-size: 100%; padding:5px 10px 5px 10px; margin: 10px; background-color: white; 
+                color: blue;" onclick="check()">Поднять сервер и проверить точку</button>
+            <!-- R -->
+        </form>
+    </div>
+      <?php ?>
+
+</body>
+</html>

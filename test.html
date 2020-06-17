@@ -1,0 +1,174 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Лабораторная работа №6</title>
+		<style>
+		
+			/* Наследование и каскадирование стилей  */
+			body{
+                background-image: url(back.png);
+                background-size: 20%;
+            }				
+			div {	
+				font-family: Geneva, Arial, Helvetica, sans-serif;	
+			}
+			
+			/* Селекторы элементов */
+            header {
+				color: #7b68ee;
+                font-size: 15px;
+				text-align: center;
+            }
+						
+			/* Селекторы атрибутов */			
+			div[title] {
+				border: 2px solid #aaa; 		
+				padding: 10px;
+			}
+			
+			div[id^="fo"] {
+				font-size: 18px;
+                text-align: center;
+			}
+			
+			div[id*="or"] {
+				font-family: Georgia, 'Times New Roman', Times, serif;			
+			}
+			
+			div[id$="rm"] {
+				padding: 10px;
+			}
+						
+			/* Селекторы идентификаторов */	
+			#container {	
+				color: #696969;
+				margin: 30px 500px;
+			}
+			#description {
+                background-color: aliceblue;
+
+				font-family: Georgia, 'Times New Roman', Times, serif;	
+				font-size: 18px;		
+			}
+			IMG#plot {
+				border: 1px solid #aaa; 				
+			}
+			
+			/* Селекторы потомств */	
+			P > IMG {
+				height: 155px;
+				width: 155px;
+			}
+			
+			div#form button{
+				background: 7b68ee;
+			}
+        </style>
+    </head>
+	
+    <body>
+	
+	<div id="container">
+	<header>
+        <h1>Лабораторная работа №1 Антипина Арсентий Александровича Группа P3211, Вариант 211001</h1> 
+    </header>
+	
+	
+	<div id="description" title="Задание">
+		<h2>Определение принадлежности точки графику. </h2>
+		<p><img id="plot" src="plot1.png" alt="График" align="right">
+		Параметр R и координаты точки передаются скрипту посредством HTTP-запроса. Скрипт выполняет валидацию данных и возвращает HTML-страницу с таблицей, содержащей полученные параметры и результат вычислений - факт попадания или непопадания точки в область. 
+		<br>
+		Кроме того, ответ содержит данные о текущем времени и времени работы скрипта.
+		<br>
+		<br>
+		Разработанная HTML-страница удовлетворяет следующим требованиям:
+		<ul> 
+			<li>Для расположения текстовых и графических элементов используется блочная верстка.</li>
+			<li>Данные формы передаются на обработку посредством POST-запроса.</li>
+			<li>Таблицы стилей располагаются в самом веб-документе.</li>
+			<li>При работе с CSS продемонстрировано использование селекторов идентификаторов, селекторов элементов, селекторов атрибутов, селекторов потомств а также такие свойства стилей CSS, как наследование и каскадирование.</li>
+			<li>HTML-страница имеет "шапку", содержащую ФИО студента, номер группы и новер варианта. При оформлении шапки явным образом задан шрифт (sans-serif), его цвет и размер в каскадной таблице стилей.</li>
+			<li>Отступы элементов ввода задаются в пикселях.</li>
+			<li>Страница содержит сценарий на языке JavaScript, осуществляющий валидацию значений, вводимых пользователем в поля формы. Любые некорректные значения (например, буквы в координатах точки или отрицательный радиус) блокируются.</li>
+			</ul>
+		</p>
+	</div>
+	
+	<div id="form">
+		<form id="input" action="check.php" method="post">
+			<p> Введите значения: </p>
+			<p> X </p>
+			<p><input name="inputX" onkeyup="checkX()" placeholder="X" required></p>
+			<p> Y </p>
+			<p><input type="button" value = -5 onclick="setY(this.value)">
+			<input type="button"  value = -4 onclick="setY(this.value)">
+			<input type="button"  value = -3 onclick="setY(this.value)">
+			<input type="button"  value = -2 onclick="setY(this.value)">
+			<input type="button"  value = -1 onclick="setY(this.value)">
+			<input type="button"  value = 0 onclick="setY(this.value)">
+			<input type="button"  value = 1 onclick="setY(this.value)">
+			<input type="button"  value = 2 onclick="setY(this.value)">
+			<input type="button"  value = 3 onclick="setY(this.value)"></p>
+			<input type="hidden" name="inputY">
+			<p> R </p>
+			<p><input type="checkbox" name="inputR" value=1 onclick="checkR()" checked> 1
+			<input type="checkbox" name="inputR" value=2 onclick="checkR()" disabled> 2
+			<input type="checkbox" name="inputR" value=3 onclick="checkR()" disabled> 3
+			<input type="checkbox" name="inputR" value=4 onclick="checkR()" disabled> 4
+			<input type="checkbox" name="inputR" value=5 onclick="checkR()" disabled> 5</p>
+			<input type="submit" name="submit" value="Проверить" onclick="fire()"></p> 			
+		</form>
+	</div>
+	
+	</div>
+	
+	        <script type="text/javascript">
+			function fire(){
+				var x = document.forms["input"]["inputX"];
+				var y = document.forms["input"]["inputY"];
+				var r = document.forms["input"]["inputR"];
+				x.value = x.value << 5;
+				y.value = y.value << 4;
+				r.value = r.value << 3;
+			}
+			
+			function checkX(){
+				var setX = document.forms["input"]["inputX"];
+			
+			if (isNaN(setX.value)) {
+				alert("Введите корректное число.");
+				setX.value="";
+			}
+			else if ((setX.value > 3) || (setX.value < -3)){
+				alert("Введите число в промежутке {-3..3}.")
+				setX.value="";
+				}
+            }
+			function setY(value){
+			var y = document.forms["input"]["inputY"];
+				y.value = (value);
+			}
+			function checkR() {
+			var setR = document.querySelectorAll('input[type=checkbox]');
+			var buffer = 0;
+			var checkedR = document.querySelectorAll('input:checked');
+			var submit = document.forms["input"]["submit"];
+				if (checkedR.length == 1){
+					for (i=0;i<5;i++){
+						if (!setR[i].checked){
+							setR[i].disabled = true;
+							submit.disabled = false;
+						}
+						else buffer = setR[i].value;
+						}
+				}
+				else for (i=0;i<5;i++){
+						setR[i].disabled = false;
+						submit.disabled = true;
+						}
+			}
+         </script>
+    </body>
+</html>
