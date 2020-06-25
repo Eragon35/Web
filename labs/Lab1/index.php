@@ -218,7 +218,7 @@
 
     <table id = "table">
         <?php 
-            $start = microtime(true);
+            $time_start = microtime(true);
             if (isset($_GET['inputX']) && isset($_GET['inputY']) && isset($_GET['inputR'])) {
                 $x = (integer)$_GET['inputX']; 
                 $y = (double)$_GET['inputY']; 
@@ -251,6 +251,27 @@
             <td>5:08</td>
             <td>0:01.34</td>
         </tr>
+        <?php
+            $history = isset($_SESSION['history']) && is_array($_SESSION['history']) ? $_SESSION['history'] : [];
+            if (isset($_GET['X']) && isset($_GET['Y']) && isset($_GET['R']) && !($flag == 0)) {
+                $inside = -1;
+                if ($x < 0){
+                    //when x < 0 : y ∈ [-r/2;0]
+                    if (($y > 0) or ($y < -$r/2) or (-$x > $r)) { $inside = 0; }
+                }
+                else {
+                    //if y < 0 : then x^2 + y^2 < r^2 
+                    //if y > 0 : y < r/2 - x/2
+                    if ($y > 0) {
+                        if ($y > ($r/2 - $x/2)) { $inside = 0; }
+                    }
+                    elseif (($x^2 + $y^2) > $r^2) { $inside = 0; }
+                }
+            $work_time = microtime(true) - $time_start;   
+            date_default_timezone_set('Etc/GMT+3');
+            $time = date("d.m.Y H:i:s.v");
+            }
+        ?>
     </table>
       
     <script type="text/javascript" >
