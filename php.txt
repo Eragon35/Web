@@ -1,0 +1,29 @@
+Shurik
+<?php
+                        $start_time = microtime(true);
+                        //var_dump($_POST);
+                        $X = $_POST["inputX"] >> 5;
+                        $Y = $_POST["inputY"] >> 4;
+                        $R = $_POST["inputR"];            
+                        $file = fopen("bd", "a+");
+                        $content = " ($X;$Y) .  R = $R . ";
+                        //echo ("$content");
+                        fwrite($file, $content);
+                        //echo("Точка ($X ; $Y),  Радиус $R - ");
+                          if ((($X>=0) && ($Y>=0) && ($X*$X+$Y*$Y<=($R*$R)/4))||(($X<=0)&&($Y<=0)&&($X>=-$R)&&($Y>=-$R))||(($X>=0)&&($Y<=0)&&(($X*$R/2 - $Y) <= ($R*$R/2 - $R)))){
+                          //echo("Попадает<BR>");
+                        fwrite($file, "Попадает" . PHP_EOL);
+                          }
+                          else {
+                                //echo("Не Попадает<BR>");
+                                fwrite($file, "Не попадает\r\n");
+}
+                        fclose($file);
+                        $file = fopen("bd", "r+");
+                        $content = fread($file, filesize("bd"));
+                        echo nl2br("$content");
+                        fclose($file);
+                        $exec_time = (microtime(true) - $start_time) * pow(10,6);
+                        printf ("<BR>Время выполнения скрипта: ".$exec_time." мкс.<BR>");
+                        echo ("Текущее время: ".date("H:i:s"));
+                ?>

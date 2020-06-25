@@ -1,29 +1,29 @@
 Hello world!
  <?php 
-$x = (int)$_GET['inputX']; 
-$y = (int)$_GET['inputY']; 
-$r = (int)$_GET['inputR']; 
-$flag = true;
-if ($x < 0){
-    //when x < 0 : y ∈ [-r/2;0]
-    if (($y > 0) or ($y < -$r/2)) $flag = false;
-}
-else {
-    //if y < 0 then x^2 + y^2 < r^2 if y > 0 y < r/2 - x/2
-    if (($y > 0) and ($x < $r)){
-        if ($y < ($r/2 - $x/2)){}
-        else $flag = false;
+ // TODO: add validation
+$x = (double)$_GET['inputX']; 
+$y = (double)$_GET['inputY']; 
+$r = (double)$_GET['inputR']; 
+
+function test ($x, $y, $r){
+    $flag = 1;
+    if ($x < 0){
+        //when x < 0 : y ∈ [-r/2;0]
+        if (($y > 0) or ($y < -$r/2) or (-$x > $r)) {$flag = 0;}
     }
-    else{
-        if ($x < $r/2){
-            if ($x^2 + $y^2 > $r^2){$flag = false;}
+    if ($x >= 0) {
+        //if y < 0 then x^2 + y^2 < r^2 if y > 0 y < r/2 - x/2
+        if (($y > 0) and ($x < $r)){
+            if ($y > ($r/2 - $x/2)){$flag = 0;}
         }
-        else $flag = false;
+        else{
+                if (($x^2 + $y^2) > $r^2){$flag = 0;}
+        }
+    }
+        return $flag;
     }
     
-}
-echo $flag;
-
-
+$fun = 'test';
+echo $fun($x, $y, $r);
 
 ?>

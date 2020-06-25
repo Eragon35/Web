@@ -217,6 +217,24 @@
     </div>
 
     <table id = "table">
+        <?php 
+            $start = microtime(true);
+            if (isset($_GET['inputX']) && isset($_GET['inputY']) && isset($_GET['inputR'])) {
+                $x = (integer)$_GET['inputX']; 
+                $y = (double)$_GET['inputY']; 
+                $r = (integer)$_GET['inputR']; 
+                $flag = -1;
+                if (($x < -5) or ($x > 3)) {
+                    $flag = 0;
+                    echo '<tr><td>Значение Х лежит вне диапазона</td></td>';}
+                elseif(($y <= -3) or ($y >= 5)) {
+                    $flag = 0;
+                    echo '<tr><td>Значение Y лежит вне диапазона</td></td>';} 
+                elseif(($r < 1) or ($r > 5)) {
+                    $flag = 0;
+                    echo '<tr><td>Значение R лежит вне диапазона</td></td>';}  
+            }          
+        ?>
         <tr>
             <td>X</td>
             <td>Y</td>
@@ -234,55 +252,67 @@
             <td>0:01.34</td>
         </tr>
     </table>
-      <!--?php ? -->
-      <script type="text/javascript" >
-        // src="https://code.jquery.com/jquery-3.4.1.js"
-            var r = 0;
-            var x;
-            var y;
-            var message = "Технические работы в ИСУ\n \nДоступ к ИСУ временно ограничен. Мы работаем над исправлением ошибок." + 
-                "\n \nПриносим извинения за доставленные неудобства. ";
-            var notification = document.getElementById("answer");
-            function input(number){
-                r = number;
+      
+    <script type="text/javascript" >
+        // src="https://code.jquery.com/jquery-3.4.1.js"    
+        var btn = document.getElementById('Button');
+        btn.disabled = true;
+        var r = 0;
+        var x;
+        var y;
+        var message = "Технические работы в ИСУ\n \nДоступ к ИСУ временно ограничен. Мы работаем над исправлением ошибок." + 
+            "\n \nПриносим извинения за доставленные неудобства. ";
+        var notification = document.getElementById("answer");
+        function input(number){
+            r = number;
+        }
+        
+        function check(){
+            var foo = true;
+            var flag = 0;
+            var input = document.getElementById("inputY").value;
+            for (var i = 0; i< 9; i++) {
+                if(document.myform["inputX"][i].checked){
+                    flag ++;
+                    x = document.myform["inputX"][i].value;
+                    
+                }
+            }
+            if (flag != 1) {
+                foo = false;
+                notification.innerHTML = "Выберите только ОДНО значение X";
+                btn.disabled = true;
+            }
+            else if (input.length == 0){
+                foo = false;
+                notification.innerHTML = "Заполним форму Y";
+                btn.disabled = true;
+            }
+            else if (!/^[0-9 | . | -]+$/i.test(input)){
+                foo = false;
+                notification.innerHTML = "текст максимальной длинны который не вылезае";
+                notification.innerHTML = "Допустим только ввод цифр и точки";
+                btn.disabled = true;
+            }
+            else if ((input <= -3 || input >= 5)){
+                foo = false;
+                notification.innerHTML = "Значение Y должно входить в (-3;5)";
+                btn.disabled = true;
+            }
+            else if (r == 0){
+                foo = false;
+                notification.innerHTML = "Выберите R";
+                btn.disabled = true;
             }
             
-            function check(){
-                var foo = true;
-                var flag = 0;
-                var input = document.getElementById("inputY").value;
-                for (var i = 0; i< 9; i++) {
-                    if(document.myform["inputX"][i].checked){
-                        flag ++;
-                        x = document.myform["inputX"][i].value;
-                        
-                    }
-                }
-                if (flag != 1) {
-                    foo = false;
-                    notification.innerHTML = "Выберите только ОДНО значение X";
-                }
-                else if (input.length == 0){
-                    foo = false;
-                    notification.innerHTML = "Заполним форму Y";
-                }
-                else if (!/^[0-9 | . | -]+$/i.test(input)){
-                    foo = false;
-                    notification.innerHTML = "Поле должно содержать только цифры в десятичной записи";
-                }
-                else if ((input <= -3 || input >= 5)){
-                    foo = false;
-                    notification.innerHTML = "Значение Y должно входить в (-3;5)";
-                }
-                else if (r == 0){
-                    foo = false;
-                    notification.innerHTML = "Выберите R";
-                }
-                
-                if (foo) notification.innerHTML = ""; 
+            if (foo) {
+                notification.innerHTML = ""; 
+                btn.disabled = false;
 
             }
-            setInterval(check,100);
-          </script>
+
+        }
+        setInterval(check,100);
+    </script>
 </body>
 </html>
