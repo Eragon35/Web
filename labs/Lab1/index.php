@@ -66,20 +66,20 @@
             border: 4px solid crimson;
             background-color: rgba(0, 34, 255, 0.8);
         }
-        button{
+        #Button{
             font-size: 100%; 
             padding:5px 10px 5px 10px; 
             margin: 10px; 
             background-color: white; 
             color: blue;
         }
-        button:hover {
+        #Button:hover {
             /* курсор — палец */
             cursor: pointer;
             /* малиновая тень */
             box-shadow: 3px 3px crimson;
         }
-        button:disabled{
+        #Button:disabled{
             background-color: rgb(50,50,50);
             color: gray;
         }
@@ -186,29 +186,31 @@
     <div>
         <form name = "myform" action="index.php" method="get">  <!-- onsubmit -->
             <p>Выберите X</p>
-            <input type = "checkbox" name = "inputX" value="-5"> -5
-            <input type = "checkbox" name = "inputX" value="-4"> -4
-            <input type = "checkbox" name = "inputX" value="-3"> -3
-            <input type = "checkbox" name = "inputX" value="-2"> -2
-            <input type = "checkbox" name = "inputX" value="-1"> -1
-            <input type = "checkbox" name = "inputX" value="0"> 0
-            <input type = "checkbox" name = "inputX" value="1"> 1
-            <input type = "checkbox" name = "inputX" value="2"> 2
-            <input type = "checkbox" name = "inputX" value="3"> 3
+            <input type = "checkbox" name = "X" value="-5"> -5
+            <input type = "checkbox" name = "X" value="-4"> -4
+            <input type = "checkbox" name = "X" value="-3"> -3
+            <input type = "checkbox" name = "X" value="-2"> -2
+            <input type = "checkbox" name = "X" value="-1"> -1
+            <input type = "checkbox" name = "X" value="0"> 0
+            <input type = "checkbox" name = "X" value="1"> 1
+            <input type = "checkbox" name = "X" value="2"> 2
+            <input type = "checkbox" name = "X" value="3"> 3
             
             <p>Введите Y</p>
-            <input type = "text" id = "inputY" maxlength="9"> <!-- Y можно было бы использовать type = "number" чтобы вводить только цифры -->
+            <input type = "text" id = "inputY" name = "Y" maxlength="9"> <!-- Y можно было бы использовать type = "number" чтобы вводить только цифры -->
            
             <p>Выберите R</p>
-            <input type = "button" name = "inputR" value="1" class = "r" onclick="input(this.value)">
-            <input type = "button" name = "inputR" value="2" class = "r" onclick="input(this.value)">
-            <input type = "button" name = "inputR" value="3" class = "r" onclick="input(this.value)">
-            <input type = "button" name = "inputR" value="4" class = "r" onclick="input(this.value)">
-            <input type = "button" name = "inputR" value="5" class = "r" onclick="input(this.value)"> 
+            <input type = "button" value="1" onclick="input(this.value)">
+            <input type = "button" value="2" onclick="input(this.value)">
+            <input type = "button" value="3" onclick="input(this.value)">
+            <input type = "button" value="4" onclick="input(this.value)">
+            <input type = "button" value="5" onclick="input(this.value)"> 
+            <input type = "hidden" name = "R" id = "hidden" value = "-1">
             <br>
             <br>
             <br>
-            <button  id = "Button" >Поднять сервер и проверить точку</button>
+            <input type = "submit"  id = "Button" value = "Поднять сервер и проверить точку">
+            <!-- <button type = submit" id = "Button" >Поднять сервер и проверить точку</button> -->
 
            
             <p id = "answer" name = "notification">  </p> <!-- output error-->
@@ -217,61 +219,94 @@
     </div>
 
     <table id = "table">
-        <?php 
-            $time_start = microtime(true);
-            if (isset($_GET['inputX']) && isset($_GET['inputY']) && isset($_GET['inputR'])) {
-                $x = (integer)$_GET['inputX']; 
-                $y = (double)$_GET['inputY']; 
-                $r = (integer)$_GET['inputR']; 
-                $flag = -1;
-                if (($x < -5) or ($x > 3)) {
-                    $flag = 0;
-                    echo '<tr><td>Значение Х лежит вне диапазона</td></td>';}
-                elseif(($y <= -3) or ($y >= 5)) {
-                    $flag = 0;
-                    echo '<tr><td>Значение Y лежит вне диапазона</td></td>';} 
-                elseif(($r < 1) or ($r > 5)) {
-                    $flag = 0;
-                    echo '<tr><td>Значение R лежит вне диапазона</td></td>';}  
-            }          
-        ?>
-        <tr>
-            <td>X</td>
-            <td>Y</td>
-            <td>R</td>
-            <td>entry</td>
-            <td>current time</td>
-            <td>script time</td>
-        </tr>
-        <tr>
-            <td>2</td>
-            <td>1</td>
-            <td>4</td>
-            <td>+</td>
-            <td>5:08</td>
-            <td>0:01.34</td>
-        </tr>
-        <?php
-            $history = isset($_SESSION['history']) && is_array($_SESSION['history']) ? $_SESSION['history'] : [];
-            if (isset($_GET['X']) && isset($_GET['Y']) && isset($_GET['R']) && !($flag == 0)) {
-                $inside = -1;
-                if ($x < 0){
-                    //when x < 0 : y ∈ [-r/2;0]
-                    if (($y > 0) or ($y < -$r/2) or (-$x > $r)) { $inside = 0; }
-                }
-                else {
-                    //if y < 0 : then x^2 + y^2 < r^2 
-                    //if y > 0 : y < r/2 - x/2
-                    if ($y > 0) {
-                        if ($y > ($r/2 - $x/2)) { $inside = 0; }
-                    }
-                    elseif (($x^2 + $y^2) > $r^2) { $inside = 0; }
-                }
-            $work_time = microtime(true) - $time_start;   
-            date_default_timezone_set('Etc/GMT+3');
-            $time = date("d.m.Y H:i:s.v");
+    <?php 
+        
+        $time_start = microtime(true);
+        if (isset($_GET['X']) && isset($_GET['Y']) && isset($_GET['R'])) {   
+        $x = (integer)htmlentities($_GET['X']); 
+        $y = (double)htmlentities($_GET['Y']); 
+        $r = (integer)htmlentities($_GET['R']); 
+        $flag = -1;
+            if (($x < -5) or ($x > 3)) {
+                $flag = 0;
+                echo '<tr><td>Значение Х лежит вне диапазона</td></td>';}
+            elseif(($y <= -3) or ($y >= 5)) {
+                $flag = 0;
+                echo '<tr><td>Значение Y лежит вне диапазона</td></td>';} 
+            elseif(($r < 1) or ($r > 5)) {
+                $flag = 0;
+                echo '<tr><td>Значение R лежит вне диапазона</td></td>';}  
+        }          
+        // echo "X $x;     Y$y;    R$r.";
+    ?>
+    <tr>
+        <td>X</td>
+        <td>Y</td>
+        <td>R</td>
+        <td>entry</td>
+        <td>current time</td>
+        <td>script time</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>1</td>
+        <td>4</td>
+        <td>+</td>
+        <td>5:08</td>
+        <td>0:01.34</td>
+    </tr>
+    <?php
+        $history = isset($_SESSION['history']) && is_array($_SESSION['history']) ? $_SESSION['history'] : [];
+        if (isset($_GET['X']) && isset($_GET['Y']) && isset($_GET['R']) && !($flag == 0)) {
+            $line = "<tr><td>" . $x . "</td><td>" . $y . "</td><td>" . $r . "</td><td>";
+            $inside = '+';
+            if ($x < 0){
+                //when x < 0 : y ∈ [-r/2;0]
+                if (($y > 0) or ($y < -$r/2) or (-$x > $r)) { $inside = '-'; }
             }
-        ?>
+            else {
+                //if y < 0 : then x^2 + y^2 <= r^2 
+                //if y > 0 : y <= r/2 - x/2
+                if ($y > 0) {
+                    if ($y > ($r/2 - $x/2)) { $inside = '-'; }
+                }
+                elseif (($x^2 + $y^2) > $r^2) { $inside = '-'; }
+            }
+                
+            date_default_timezone_set('Etc/GMT+3');
+            $uniqid = $_GET['uniqid'];
+            $date = date("H:i:s");
+            $time = round((microtime(true) - $time_start) * 10 ** 3, 3);
+            $line .= $inside . "</td><td>" . $date . "</td><td>" . $time . "</td.></tr>";
+            echo $line;
+
+
+            if ($history[0]["uniqid"] !== $uniqid) {
+                array_unshift($history, [
+                    'X' => $x,
+                    'Y' => $y,
+                    'R' => $r,
+                    'Inside' => $inside,
+                    'Date' => $date,
+                    'Time' => $time,
+                    'uniqid' => $uniqid
+                ]);
+            }
+        }
+        $_SESSION['history'] = $history;
+        foreach ($history as $result) {
+    ?>
+            <tr>
+                <td><? echo $result['X']; ?></td>
+                <td><? echo $result['Y']; ?></td>
+                <td><? echo $result['R']; ?></td>
+                <td><? echo $result["Inside"]; ?></td>
+                <td><? echo $result["Date"]; ?></td>
+                <td><? echo $result["Time"]; ?></td>
+            </tr>
+    <?php
+        }
+    ?>
     </table>
       
     <script type="text/javascript" >
@@ -285,6 +320,8 @@
             "\n \nПриносим извинения за доставленные неудобства. ";
         var notification = document.getElementById("answer");
         function input(number){
+            var btn = document.getElementById("hidden");
+            btn.value = number;
             r = number;
         }
         
@@ -293,9 +330,9 @@
             var flag = 0;
             var input = document.getElementById("inputY").value;
             for (var i = 0; i< 9; i++) {
-                if(document.myform["inputX"][i].checked){
+                if(document.myform["X"][i].checked){
                     flag ++;
-                    x = document.myform["inputX"][i].value;
+                    x = document.myform["X"][i].value;
                     
                 }
             }
