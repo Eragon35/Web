@@ -8,25 +8,18 @@
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon"> <!--favicon.ico or icon.png-->
     <title>ITMO</title>
     <style>
-
         /* Наследование и каскадирование стилей  */
-
         body{
             background-image: url(back.png);
             background-size: 20%; 
-            /* filter: blur(8px); */
-            /*ackdrop-filter: blur (20px)*/
         }
 
         #labInfo > header{  /* использование селекторов дочерних элементов */
             font-family: "Montserrat","Open Sans", sans-serif;
             color:#fff;
             font-size: 22px;
-           /* text-transform: uppercase;*/
             background-color: hsl(232, 100%, 50%, 0.8);
-            /*border-width: 100px;
-            border:  #fff;*/
-            border: 4px solid crimson; /*2px solid rgb(205, 205, 205);*/
+            border: 4px solid crimson;
             padding-top: 3px;
             padding-bottom: 3px;
             width: 420px; 
@@ -40,7 +33,6 @@
             margin-left: auto;
             margin-right: auto;
             font-size: 14pt;
-            /*color:rgba(195, 0, 255);*/
             background-color: rgb(248, 248, 248, 0.5);
             padding-left: 1%;
             padding-right: 1%;
@@ -50,7 +42,6 @@
             font-size: 14pt;
         }
         
-
         form{   /* использование селекторов элементов */
             font-family: "Montserrat","Open Sans", sans-serif;
             font-size: 17pt;
@@ -66,6 +57,7 @@
             border: 4px solid crimson;
             background-color: rgba(0, 34, 255, 0.8);
         }
+
         #Button{
             font-size: 100%; 
             padding:5px 10px 5px 10px; 
@@ -73,16 +65,19 @@
             background-color: white; 
             color: blue;
         }
+
         #Button:hover {
             /* курсор — палец */
             cursor: pointer;
             /* малиновая тень */
             box-shadow: 3px 3px crimson;
         }
+
         #Button:disabled{
             background-color: rgb(50,50,50);
             color: gray;
         }
+
         .image {
             margin-top: 10px;
             display: block;
@@ -90,7 +85,6 @@
             margin-right: auto;
             text-align: right;
             width:50%;
-            
             border:4px solid #02f;
             border: 6px solid crimson;
         }
@@ -104,16 +98,10 @@
             box-shadow: 2px 2px crimson;
         }
 
-
-        /* TODO add js on click*/
         .clicked { 
-                /* background-color — для цвета фона */
             background-color: black;
-                /* color — для цвета текста */
             color: white;
         }
-        
-
 
         div[id = "task"]{   /* использование селекторов атрибутов*/
             font-size: 13pt;
@@ -126,18 +114,14 @@
             margin-right: auto;
             font-size: 14pt;
             color: crimson;
-            /*color:rgba(195, 0, 255);*/
             background-color: rgb(255, 255, 255, 0.8);
             padding-left: 1%;
             padding-right: 1%;
             border:2px solid #02f;
             border-collapse: collapse;
-            
-            
         }
         
         td{
-            
             border:2px solid #02f;
             margin-left: auto;
             margin-right: auto;
@@ -184,7 +168,7 @@
     </div>
 
     <div>
-        <form name = "myform" action="index.php" method="get">  <!-- onsubmit -->
+        <form name = "myform" action="index.php" method="get">  
             <p>Выберите X</p>
             <input type = "checkbox" name = "X" value="-5"> -5
             <input type = "checkbox" name = "X" value="-4"> -4
@@ -210,8 +194,6 @@
             <br>
             <br>
             <input type = "submit"  id = "Button" value = "Поднять сервер и проверить точку">
-            <!-- <button type = submit" id = "Button" >Поднять сервер и проверить точку</button> -->
-
            
             <p id = "answer" name = "notification">  </p> <!-- output error-->
         </form>
