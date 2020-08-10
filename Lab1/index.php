@@ -193,7 +193,7 @@
             <br>
             <br>
             <br>
-            <input type = "submit"  id = "Button" value = "Поднять сервер и проверить точку">
+            <input type = "submit"  id = "Button" value = "Поднять сервер и проверить точку"> <!-- Скрытое поля для хранения R-->
            
             <p id = "answer" name = "notification">  </p> <!-- output error-->
         </form>
@@ -201,94 +201,85 @@
     </div>
 
     <table id = "table">
-    <?php 
+        <?php 
         
-        $time_start = microtime(true);
-        if (isset($_GET['X']) && isset($_GET['Y']) && isset($_GET['R'])) {   
-        $x = (integer)htmlentities($_GET['X']); 
-        $y = (double)htmlentities($_GET['Y']); 
-        $r = (integer)htmlentities($_GET['R']); 
-        $flag = -1;
-            if (($x < -5) or ($x > 3)) {
-                $flag = 0;
-                echo '<tr><td>Значение Х лежит вне диапазона</td></td>';}
-            elseif(($y <= -3) or ($y >= 5)) {
-                $flag = 0;
-                echo '<tr><td>Значение Y лежит вне диапазона</td></td>';} 
-            elseif(($r < 1) or ($r > 5)) {
-                $flag = 0;
-                echo '<tr><td>Значение R лежит вне диапазона</td></td>';}  
-        }          
-        // echo "X $x;     Y$y;    R$r.";
-    ?>
-    <tr>
-        <td>X</td>
-        <td>Y</td>
-        <td>R</td>
-        <td>entry</td>
-        <td>current time</td>
-        <td>script time</td>
-    </tr>
-    <tr>
-        <td>2</td>
-        <td>1</td>
-        <td>4</td>
-        <td>+</td>
-        <td>5:08</td>
-        <td>0:01.34</td>
-    </tr>
-    <?php
-        $history = isset($_SESSION['history']) && is_array($_SESSION['history']) ? $_SESSION['history'] : [];
-        if (isset($_GET['X']) && isset($_GET['Y']) && isset($_GET['R']) && !($flag == 0)) {
-            $line = "<tr><td>" . $x . "</td><td>" . $y . "</td><td>" . $r . "</td><td>";
-            $inside = '+';
-            if ($x < 0){
-                //when x < 0 : y ∈ [-r/2;0]
-                if (($y > 0) or ($y < -$r/2) or (-$x > $r)) { $inside = '-'; }
-            }
-            else {
-                //if y < 0 : then x^2 + y^2 <= r^2 
-                //if y > 0 : y <= r/2 - x/2
-                if ($y > 0) {
-                    if ($y > ($r/2 - $x/2)) { $inside = '-'; }
+            $duration_start = microtime(true);
+            if (isset($_GET['X']) && isset($_GET['Y']) && isset($_GET['R'])) {
+                 
+            $x = (integer)htmlentities($_GET['X']); 
+            $y = (double)htmlentities($_GET['Y']); 
+            $r = (integer)htmlentities($_GET['R']); 
+            $flag = -1;
+                if (($x < -5) or ($x > 3)) {
+                    $flag = 0;
+                    echo '<tr><td>Значение Х лежит вне диапазона</td></td>';}
+                elseif(($y <= -3) or ($y >= 5)) {
+                    $flag = 0;
+                    echo '<tr><td>Значение Y лежит вне диапазона</td></td>';} 
+                elseif(($r < 1) or ($r > 5)) {
+                    $flag = 0;
+                    echo '<tr><td>Значение R лежит вне диапазона</td></td>';}  
+            }          
+
+        ?>
+        <tr>
+            <td>X</td>
+            <td>Y</td>
+            <td>R</td>
+            <td>entrance</td>
+            <td>current duration</td>
+            <td>script duration</td>
+        </tr>
+        
+        <?php
+            $history = isset($_SESSION['history']) && is_array($_SESSION['history']) ? $_SESSION['history'] : [];
+            if (isset($_GET['X']) && isset($_GET['Y']) && isset($_GET['R']) && !($flag == 0)) {
+            
+                // checking incoming request
+                $inside = '+';
+                if ($x < 0){
+                    //when x < 0 : y ∈ [-r/2;0]
+                    if (($y > 0) or ($y < -$r/2) or (-$x > $r)) { $inside = '-'; }
                 }
-                elseif (($x^2 + $y^2) > $r^2) { $inside = '-'; }
+                else {
+                    //if y < 0 : then x^2 + y^2 <= r^2 
+                    //if y > 0 : y <= r/2 - x/2
+                    if ($y > 0) {
+                        if ($y > ($r/2 - $x/2)) { $inside = '-'; }
+                    }
+                    elseif (($x^2 + $y^2) > $r^2) { $inside = '-'; }
+                }
+                    
+                date_default_timezone_set('Etc/GMT+3');
+                $uniqid = $_GET['uniqid'];
+                $date = date("H:i:s");
+                $duration = round((microtime(true) - $duration_start) * 10 ** 3, 3);
+
+                echo "<br> X $x;     Y$y;    R$r <br> Inside $inside ; Date: $date; Duration $duration";
+            
+                $line = "<tr><td>" . $x . "</td><td>" . $y . "</td><td>" . $r . "</td><td>" . $inside . "</td><td>" . $date  . "</td><td>" . $duration . "</tr>";
+
+                echo $line;
+                               
+
+
+                if ($history[0]["uniqid"] !== $uniqid) {
+                    array_unshift($history, [
+                        'line' => $line,
+                        'uniqid' => $uniqid
+                    ]);
+                }
             }
+            $_SESSION['history'] = $history;
                 
-            date_default_timezone_set('Etc/GMT+3');
-            $uniqid = $_GET['uniqid'];
-            $date = date("H:i:s");
-            $time = round((microtime(true) - $time_start) * 10 ** 3, 3);
-            $line .= $inside . "</td><td>" . $date . "</td><td>" . $time . "</td.></tr>";
-            echo $line;
-
-
-            if ($history[0]["uniqid"] !== $uniqid) {
-                array_unshift($history, [
-                    'X' => $x,
-                    'Y' => $y,
-                    'R' => $r,
-                    'Inside' => $inside,
-                    'Date' => $date,
-                    'Time' => $time,
-                    'uniqid' => $uniqid
-                ]);
+                // output: writing response
+            
+            foreach ($history as $result) {
+        ?>
+                <? $result['line']; ?>
+        <?php
             }
-        }
-        $_SESSION['history'] = $history;
-        foreach ($history as $result) {
-    ?>
-            <tr>
-                <td><? echo $result['X']; ?></td>
-                <td><? echo $result['Y']; ?></td>
-                <td><? echo $result['R']; ?></td>
-                <td><? echo $result["Inside"]; ?></td>
-                <td><? echo $result["Date"]; ?></td>
-                <td><? echo $result["Time"]; ?></td>
-            </tr>
-    <?php
-        }
-    ?>
+        ?>
     </table>
       
     <script type="text/javascript" >

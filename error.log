@@ -1,0 +1,23 @@
+[Sun Jun 21 14:55:58.523272 2020] [mpm_winnt:notice] [pid 6588:tid 588] AH00455: Apache/2.4.43 (Win64) PHP/7.4.7 configured -- resuming normal operations
+[Sun Jun 21 14:55:58.542990 2020] [mpm_winnt:notice] [pid 6588:tid 588] AH00456: Apache Lounge VS16 Server built: Apr 21 2020 16:23:13
+[Sun Jun 21 14:55:58.542990 2020] [core:notice] [pid 6588:tid 588] AH00094: Command line: 'C:\\Apache24\\bin\\httpd.exe -d C:/Apache24'
+[Sun Jun 21 14:55:58.582634 2020] [mpm_winnt:notice] [pid 6588:tid 588] AH00418: Parent: Created child process 10744
+[Sun Jun 21 14:55:58.955074 2020] [mpm_winnt:notice] [pid 10744:tid 4] AH00354: Child: Starting 64 worker threads.
+[Sun Jun 21 14:57:04.378955 2020] [php7:error] [pid 10744:tid 1016] [client ::1:56240] script 'C:/Users/Triada/Documents/!ITMO/Web/Labs/index.php' not found or unable to stat
+[Sun Jun 21 14:57:15.755555 2020] [php7:error] [pid 10744:tid 1012] [client ::1:56244] script 'C:/Users/Triada/Documents/!ITMO/Web/Labs/index.php' not found or unable to stat
+[Sun Jun 21 14:57:46.515738 2020] [php7:error] [pid 10744:tid 1016] [client ::1:56251] script 'C:/Users/Triada/Documents/!ITMO/Web/Labs/index.php' not found or unable to stat
+[Sun Jun 21 15:01:35.179346 2020] [mpm_winnt:notice] [pid 6588:tid 588] AH00424: Parent: Received restart signal -- Restarting the server.
+[Sun Jun 21 15:01:35.490392 2020] [mpm_winnt:notice] [pid 6588:tid 588] AH00455: Apache/2.4.43 (Win64) PHP/7.4.7 configured -- resuming normal operations
+[Sun Jun 21 15:01:35.490392 2020] [mpm_winnt:notice] [pid 6588:tid 588] AH00456: Apache Lounge VS16 Server built: Apr 21 2020 16:23:13
+[Sun Jun 21 15:01:35.490392 2020] [core:notice] [pid 6588:tid 588] AH00094: Command line: 'C:\\Apache24\\bin\\httpd.exe -d C:/Apache24'
+[Sun Jun 21 15:01:35.493368 2020] [mpm_winnt:notice] [pid 6588:tid 588] AH00418: Parent: Created child process 23680
+[Sun Jun 21 15:01:36.180527 2020] [mpm_winnt:notice] [pid 23680:tid 512] AH00354: Child: Starting 64 worker threads.
+[Sun Jun 21 15:01:37.181164 2020] [mpm_winnt:notice] [pid 10744:tid 4] AH00364: Child: All worker threads have exited.
+[Sun Jun 21 16:00:38.501430 2020] [php7:error] [pid 23680:tid 1028] [client ::1:56835] script 'C:/localhost/lab1.php' not found or unable to stat, referer: http://localhost/index.html
+[Sun Jun 21 21:37:51.636433 2020] [php7:error] [pid 23680:tid 1028] [client ::1:56383] script 'C:/localhost/lab1.php' not found or unable to stat, referer: http://localhost/index.php
+[Sun Jun 21 21:38:04.629695 2020] [php7:error] [pid 23680:tid 1052] [client ::1:56388] script 'C:/localhost/lab1.php' not found or unable to stat, referer: http://localhost/index.php
+[Sun Jun 21 21:38:05.875204 2020] [php7:error] [pid 23680:tid 1052] [client ::1:56388] script 'C:/localhost/lab1.php' not found or unable to stat, referer: http://localhost/index.php
+[Sun Jun 21 21:38:09.716811 2020] [php7:error] [pid 23680:tid 1052] [client ::1:56388] script 'C:/localhost/lab1.php' not found or unable to stat, referer: http://localhost/index.php
+[Tue Jun 23 22:50:33.919031 2020] [mpm_winnt:notice] [pid 6588:tid 588] AH00422: Parent: Received shutdown signal -- Shutting down the server.
+[Tue Jun 23 22:50:35.957040 2020] [mpm_winnt:notice] [pid 23680:tid 512] AH00364: Child: All worker threads have exited.
+[Tue Jun 23 22:50:38.590741 2020] [mpm_winnt:notice] [pid 6588:tid 588] AH00430: Parent: Child process 23680 exited successfully.
