@@ -227,7 +227,7 @@
             <td>Y</td>
             <td>R</td>
             <td>entrance</td>
-            <td>current duration</td>
+            <td>date</td>
             <td>script duration</td>
         </tr>
         
@@ -247,12 +247,12 @@
                     if ($y > 0) {
                         if ($y > ($r/2 - $x/2)) { $inside = '-'; }
                     }
-                    elseif (($x^2 + $y^2) > $r^2) { $inside = '-'; }
+                    elseif (($x**2 + $y**2) > $r**2) { $inside = '-'; }
                 }
                     
                 date_default_timezone_set('Etc/GMT+3');
                 $uniqid = $_GET['uniqid'];
-                $date = date("H:i:s");
+                $date = date("F j, H:i:s");
                 $duration = round((microtime(true) - $duration_start) * 10 ** 3, 3);
 
                 echo "<br> X $x;     Y$y;    R$r <br> Inside $inside ; Date: $date; Duration $duration";
