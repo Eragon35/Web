@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -255,30 +256,19 @@
                 $date = date("F j, H:i:s");
                 $duration = round((microtime(true) - $duration_start) * 10 ** 3, 3);
 
-                echo "<br> X $x;     Y$y;    R$r <br> Inside $inside ; Date: $date; Duration $duration";
+                //echo "<br> X $x;     Y$y;    R$r <br> Inside $inside ; Date: $date; Duration $duration";
             
                 $line = "<tr><td>" . $x . "</td><td>" . $y . "</td><td>" . $r . "</td><td>" . $inside . "</td><td>" . $date  . "</td><td>" . $duration . "</tr>";
 
-                echo $line;
-                               
-
-
-                if ($history[0]["uniqid"] !== $uniqid) {
-                    array_unshift($history, [
-                        'line' => $line,
-                        'uniqid' => $uniqid
-                    ]);
-                }
+                //echo $line;
+                array_unshift($history, $line);                             
             }
             $_SESSION['history'] = $history;
                 
                 // output: writing response
             
-            foreach ($history as $result) {
-        ?>
-                <? $result['line']; ?>
-        <?php
-            }
+                for($i=0;$i<count($history);$i++)
+                echo $history[$i];
         ?>
     </table>
       
