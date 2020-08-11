@@ -2,7 +2,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- GET-request method -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -67,11 +66,9 @@
             color: blue;
         }
 
-        #Button:hover {
-            /* курсор — палец */
-            cursor: pointer;
-            /* малиновая тень */
-            box-shadow: 3px 3px crimson;
+        #Button:hover {            
+            cursor: pointer; /* курсор — палец */
+            box-shadow: 3px 3px crimson; 
         }
 
         #Button:disabled{
@@ -163,9 +160,7 @@
             Страница содержит сценарий на языке JavaScript, осуществляющий валидацию значений, вводимых пользователем 
             в поля формы. Любые некорректные значения (например, буквы в координатах точки или отрицательный радиус) блокируются.
             <br>
-    </div>
-
-
+        </div>
     </div>
 
     <div>
@@ -191,38 +186,36 @@
             <input type = "button" value="4" onclick="input(this.value)">
             <input type = "button" value="5" onclick="input(this.value)"> 
             <input type = "hidden" name = "R" id = "hidden" value = "-1">
-            <br>
-            <br>
-            <br>
+            
             <input type = "submit"  id = "Button" value = "Поднять сервер и проверить точку"> <!-- Скрытое поля для хранения R-->
            
             <p id = "answer" name = "notification">  </p> <!-- output error-->
-        </form>
-        
+        </form>        
     </div>
 
-    <table id = "table">
-        <?php 
-        
+    <table id = "table">       
+        <?php         
             $duration_start = microtime(true);
-            if (isset($_GET['X']) && isset($_GET['Y']) && isset($_GET['R'])) {
-                 
-            $x = (integer)htmlentities($_GET['X']); 
-            $y = (double)htmlentities($_GET['Y']); 
-            $r = (integer)htmlentities($_GET['R']); 
-            $flag = -1;
-                if (($x < -5) or ($x > 3)) {
-                    $flag = 0;
-                    echo '<tr><td>Значение Х лежит вне диапазона</td></td>';}
-                elseif(($y <= -3) or ($y >= 5)) {
-                    $flag = 0;
-                    echo '<tr><td>Значение Y лежит вне диапазона</td></td>';} 
-                elseif(($r < 1) or ($r > 5)) {
-                    $flag = 0;
-                    echo '<tr><td>Значение R лежит вне диапазона</td></td>';}  
+            if (isset($_GET['X']) && isset($_GET['Y']) && isset($_GET['R'])) {                 
+                $x = (integer)htmlentities($_GET['X']); 
+                $y = (double)htmlentities($_GET['Y']); 
+                $r = (integer)htmlentities($_GET['R']); 
+                $flag = -1;
+                    if (($x < -5) or ($x > 3)) {
+                        $flag = 0;
+                        echo '<tr><td>Значение Х лежит вне диапазона</td></td>';
+                    }
+                    elseif(($y <= -3) or ($y >= 5)) {
+                        $flag = 0;
+                        echo '<tr><td>Значение Y лежит вне диапазона</td></td>';
+                    } 
+                    elseif(($r < 1) or ($r > 5)) {
+                        $flag = 0;
+                        echo '<tr><td>Значение R лежит вне диапазона</td></td>';
+                    }  
             }          
-
         ?>
+
         <tr>
             <td>X</td>
             <td>Y</td>
@@ -234,7 +227,7 @@
         
         <?php
             $history = isset($_SESSION['history']) && is_array($_SESSION['history']) ? $_SESSION['history'] : [];
-            if (isset($_GET['X']) && isset($_GET['Y']) && isset($_GET['R']) && !($flag == 0)) {
+            if (isset($_GET['X']) && isset($_GET['Y']) && isset($_GET['R']) && ($flag != 0)) {
             
                 // checking incoming request
                 $inside = '+';
@@ -251,24 +244,17 @@
                     elseif (($x**2 + $y**2) > $r**2) { $inside = '-'; }
                 }
                     
-                date_default_timezone_set('Etc/GMT+3');
-                $uniqid = $_GET['uniqid'];
+                date_default_timezone_set('Europe/Moscow');	//Etc/GMT+3
                 $date = date("F j, H:i:s");
                 $duration = round((microtime(true) - $duration_start) * 10 ** 3, 3);
-
                 //echo "<br> X $x;     Y$y;    R$r <br> Inside $inside ; Date: $date; Duration $duration";
-            
                 $line = "<tr><td>" . $x . "</td><td>" . $y . "</td><td>" . $r . "</td><td>" . $inside . "</td><td>" . $date  . "</td><td>" . $duration . "</tr>";
-
-                //echo $line;
                 array_unshift($history, $line);                             
             }
-            $_SESSION['history'] = $history;
-                
-                // output: writing response
-            
-                for($i=0;$i<count($history);$i++)
-                echo $history[$i];
+            $_SESSION['history'] = $history;                
+            // output: writing response            
+            for($i=0;$i<count($history);$i++)
+            echo $history[$i];
         ?>
     </table>
       
@@ -295,8 +281,7 @@
             for (var i = 0; i< 9; i++) {
                 if(document.myform["X"][i].checked){
                     flag ++;
-                    x = document.myform["X"][i].value;
-                    
+                    x = document.myform["X"][i].value;                    
                 }
             }
             if (flag != 1) {
