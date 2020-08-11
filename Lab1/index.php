@@ -227,8 +227,7 @@
         
         <?php
             $history = isset($_SESSION['history']) && is_array($_SESSION['history']) ? $_SESSION['history'] : [];
-            if (isset($_GET['X']) && isset($_GET['Y']) && isset($_GET['R']) && ($flag != 0)) {
-            
+            if (isset($_GET['X']) && isset($_GET['Y']) && isset($_GET['R']) && ($flag != 0)) {            
                 // checking incoming request
                 $inside = '+';
                 if ($x < 0){
@@ -242,8 +241,7 @@
                         if ($y > ($r/2 - $x/2)) { $inside = '-'; }
                     }
                     elseif (($x**2 + $y**2) > $r**2) { $inside = '-'; }
-                }
-                    
+                }                    
                 date_default_timezone_set('Europe/Moscow');	//Etc/GMT+3
                 $date = date("F j, H:i:s");
                 $duration = round((microtime(true) - $duration_start) * 10 ** 3, 3);
@@ -310,13 +308,11 @@
                 notification.innerHTML = "Выберите R";
                 btn.disabled = true;
             }
-            
             if (foo) {
                 notification.innerHTML = ""; 
                 btn.disabled = false;
 
             }
-
         }
         setInterval(check,100);
     </script>
