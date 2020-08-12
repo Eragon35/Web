@@ -186,13 +186,16 @@
             <input type = "button" value="4" onclick="input(this.value)">
             <input type = "button" value="5" onclick="input(this.value)"> 
             <input type = "hidden" name = "R" id = "hidden" value = "-1">
+            <br>
+            <br>
+            <br>
             
             <input type = "submit"  id = "Button" value = "Поднять сервер и проверить точку"> <!-- Скрытое поля для хранения R-->
            
             <p id = "answer" name = "notification">  </p> <!-- output error-->
         </form>        
     </div>
-
+    
     <table id = "table">       
         <?php         
             $duration_start = microtime(true);
@@ -251,8 +254,11 @@
             }
             $_SESSION['history'] = $history;                
             // output: writing response            
-            for($i=0;$i<count($history);$i++)
-            echo $history[$i];
+            for($i=0;$i<count($history);$i++){
+                if (strpos($history[$i], 'Array'));
+                else echo $history[$i];
+            }
+            
         ?>
     </table>
       
