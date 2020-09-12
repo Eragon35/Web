@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon"> <!--favicon.ico or icon.png-->
     <title>ITMO</title>
-    <style>
+    <style> 
         /* Наследование и каскадирование стилей  */
         body{
             background-image: url(back.png);
@@ -177,7 +177,7 @@
             <input type = "checkbox" name = "X" value="3"> 3
             
             <p>Введите Y</p>
-            <input type = "text" id = "inputY" name = "Y" maxlength="9"> <!-- Y можно было бы использовать type = "number" чтобы вводить только цифры -->
+            <input type = "text" id = "inputY" name = "Y" maxlength="6"> <!-- Y можно было бы использовать type = "number" чтобы вводить только цифры -->
            
             <p>Выберите R</p>
             <input type = "button" value="1" onclick="input(this.value)">
@@ -198,24 +198,24 @@
     
     <table id = "table">       
         <?php         
-            $duration_start = microtime(true);
+             $duration_start = microtime(true);
             if (isset($_GET['X']) && isset($_GET['Y']) && isset($_GET['R'])) {                 
                 $x = (integer)htmlentities($_GET['X']); 
                 $y = (double)htmlentities($_GET['Y']); 
                 $r = (integer)htmlentities($_GET['R']); 
                 $flag = -1;
-                    if (($x < -5) or ($x > 3)) {
+                    if (($x < -5) or ($x > 3) or (!is_numeric($x))) {
                         $flag = 0;
                         echo '<tr><td>Значение Х лежит вне диапазона</td></td>';
                     }
-                    elseif(($y <= -3) or ($y >= 5)) {
+                    elseif(($y <= -3) or ($y >= 5) or (!is_numeric($y))) {
                         $flag = 0;
                         echo '<tr><td>Значение Y лежит вне диапазона</td></td>';
                     } 
-                    elseif(($r < 1) or ($r > 5)) {
+                    elseif(($r < 1) or ($r > 5) or (!is_numeric($y))) {
                         $flag = 0;
                         echo '<tr><td>Значение R лежит вне диапазона</td></td>';
-                    }  
+                    } 
             }          
         ?>
 
@@ -258,7 +258,6 @@
                 if (strpos($history[$i], 'Array'));
                 else echo $history[$i];
             }
-            
         ?>
     </table>
       
@@ -270,8 +269,9 @@
         var x;
         var y;
         var message = "Технические работы в ИСУ\n \nДоступ к ИСУ временно ограничен. Мы работаем над исправлением ошибок." + 
-            "\n \nПриносим извинения за доставленные неудобства. ";
+            "\n \nПриносим извинения за доставленные неудобства.";
         var notification = document.getElementById("answer");
+
         function input(number){
             var btn = document.getElementById("hidden");
             btn.value = number;
@@ -298,7 +298,7 @@
                 notification.innerHTML = "Заполним форму Y";
                 btn.disabled = true;
             }
-            else if (!/^[0-9 | . | -]+$/i.test(input)){
+            else if (!/^-?\d+[.,]?\d*$/i.test(input)){
                 foo = false;
                 notification.innerHTML = "текст максимальной длинны который не вылезае";
                 notification.innerHTML = "Допустим только ввод цифр и точки";
