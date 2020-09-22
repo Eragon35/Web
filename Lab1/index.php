@@ -8,7 +8,7 @@
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon"> <!--favicon.ico or icon.png-->
     <title>ITMO</title>
     <style> 
-        /* Наследование и каскадирование стилей  */
+        /* Наследование и каскадирование стилей */
         body{
             background-image: url(back.png);
             background-size: 20%; 
@@ -47,7 +47,7 @@
             font-size: 17pt;
             line-height: 1px;
             padding-left: 15px; 
-            margin-top: 10px;   /* задал отступы элементов ввода в пикселях*/
+            margin-top: 10px;   /* задал отступы элементов ввода в пикселях */
             margin-left: auto;
             margin-right: auto;
             color: #fff;
@@ -66,12 +66,12 @@
             color: blue;
         }
 
-        #Button:hover {            
+        #Button:hover { /* использование селекторов псевдоклассов */      
             cursor: pointer; /* курсор — палец */
             box-shadow: 3px 3px crimson; 
         }
 
-        #Button:disabled{
+        #Button:disabled{ 
             background-color: rgb(50,50,50);
             color: gray;
         }
@@ -87,7 +87,7 @@
             border: 6px solid crimson;
         }
 
-        .r{ /* использование селекторов псевдоклассов*/
+        .r{ 
             font-size: 14px;
         }
 
@@ -101,7 +101,7 @@
             color: white;
         }
 
-        div[id = "task"]{   /* использование селекторов атрибутов*/
+        div[id = "task"]{   /* использование селекторов атрибутов */
             font-size: 13pt;
         }
 
@@ -119,7 +119,7 @@
             border-collapse: collapse;
         }
         
-        td{
+        table td{   /* использование селектора потомков */
             border:2px solid #02f;
             margin-left: auto;
             margin-right: auto;
@@ -164,7 +164,7 @@
     </div>
 
     <div>
-        <form name = "myform" action="index.php" method="get">  
+        <form name = "myform" action="index.php" method="get" title = "Таблица ввода значений">  
             <p>Выберите X</p>
             <input type = "checkbox" name = "X" value="-5"> -5
             <input type = "checkbox" name = "X" value="-4"> -4
@@ -196,7 +196,7 @@
         </form>        
     </div>
     
-    <table id = "table">       
+    <table id = "table" title = "Таблица значений">       
         <?php         
              $duration_start = microtime(true);
             if (isset($_GET['X']) && isset($_GET['Y']) && isset($_GET['R'])) {                 
@@ -301,7 +301,7 @@
             else if (!/^-?\d+[.,]?\d*$/i.test(input)){
                 foo = false;
                 notification.innerHTML = "текст максимальной длинны который не вылезае";
-                notification.innerHTML = "Допустим только ввод цифр и точки";
+                notification.innerHTML = "Допустим ввод цифр и точки или запятой";
                 btn.disabled = true;
             }
             else if ((input <= -3 || input >= 5)){
